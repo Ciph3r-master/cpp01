@@ -17,7 +17,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	std::string filename = av[1];
-	filename += ".replace";
+	filename.append(".replace");
 	std::ofstream newFile(filename.c_str());
 	if (!newFile.is_open())
 	{
