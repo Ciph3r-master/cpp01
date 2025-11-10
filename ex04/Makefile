@@ -1,4 +1,4 @@
-NAME = sed
+NAME = sedv2
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -MD -MP -std=c++98
 RM = rm -rf
@@ -18,6 +18,7 @@ $(NAME): $(OBJS) Makefile
 clean:
 	rm -f $(OBJS)
 	rm -f $(DEPS)
+	rm -f *.replace
 
 fclean: clean
 	rm -f $(NAME)

@@ -2,6 +2,24 @@
 #include <fstream>
 #include <string>
 
+std::string	replaceAll(const std::string& line, const std::string& to_replace,
+	const std::string& new_string)
+{
+	if (to_replace.empty())
+		return (line);
+
+	std::string res = line;
+	size_t pos = res.find(to_replace);
+
+	while (pos != std::string::npos)
+	{
+		res.erase(pos, to_replace.length());
+		res.insert(pos, new_string);
+		pos += new_string.length();
+		pos = res.find(to_replace, pos);
+	}
+	return (res);
+}
 
 int	main(int ac, char **av)
 {
@@ -10,43 +28,32 @@ int	main(int ac, char **av)
 		std::cerr << "Usage: ./sed <file> <to_replace> <new_string>" << std::endl;
 		return (1);
 	}
-	std::fstream file(av[1]);
-	if (!file.is_open())
+
+	std::string input_file = av[1];
+	std::string to_replace = av[2];
+	std::string new_string = av[3];
+	std::string output_file = input_file + ".replace";
+
+	std::ifstream inFile(input_file.c_str());
+	if (!inFile.is_open())
 	{
 		std::cerr << "Error : Failed to open the file" << std::endl;
 		return (1);
 	}
-	std::string filename = av[1];
-	filename.append(".replace");
-	std::ofstream newFile(filename.c_str());
-	if (!newFile.is_open())
+
+	std::ofstream outFile(output_file.c_str());
+	if (!outFile.is_open())
 	{
-		std::cerr << "Error : Failed to open the file" << std::endl;
-		file.close();
+		std::cerr << "Error : Failed to create the output file" << std::endl;
 		return (1);
 	}
+
 	std::string line;
-	while (!file.eof())
+	while (std::getline(inFile, line))
 	{
-		std::getline(file, line);
-		std::string to_replace = av[2];
-		std::string	new_string = av[3];
-		size_t pos = line.find(to_replace);
-		while (pos != std::string::npos)
-		{
-			std::string before;
-			std::string after;
-			int	new_line_len = line.length() - (pos + to_replace.length());
-			before = line.substr(0, pos);
-			after = line.substr(pos + to_replace.length(), new_line_len);
-			line = before + new_string + after;
-			pos = line.find(to_replace);
-		}
-		if (!file.eof())
-			newFile << line << std::endl;
-		else
-			newFile << line;
-	}	file.close();
-	newFile.close();
+		outFile << replaceAll(line, to_replace, new_string);
+		if (!inFile.eof())
+			outFile << "\n";
+	}
 	return (0);
 }
