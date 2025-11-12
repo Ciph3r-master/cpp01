@@ -18,7 +18,7 @@ int	main(void)
 	}
 	catch (const std::invalid_argument &e)
 	{
-		std::cerr << "Error : " << e.what() << std::endl;
+		std::cout << "Error : " << e.what() << std::endl;
 	}
 	return (0);
 }

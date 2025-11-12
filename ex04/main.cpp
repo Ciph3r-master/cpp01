@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 {
 	if (ac != 4)
 	{
-		std::cerr << "Usage: ./sed <file> <to_replace> <new_string>" << std::endl;
+		std::cout << "Usage: ./sed <file> <to_replace> <new_string>" << std::endl;
 		return (1);
 	}
 
@@ -37,14 +37,14 @@ int	main(int ac, char **av)
 	std::ifstream inFile(input_file.c_str());
 	if (!inFile.is_open())
 	{
-		std::cerr << "Error : Failed to open the file" << std::endl;
+		std::cout << "Error : Failed to open the file" << std::endl;
 		return (1);
 	}
 
 	std::ofstream outFile(output_file.c_str());
 	if (!outFile.is_open())
 	{
-		std::cerr << "Error : Failed to create the output file" << std::endl;
+		std::cout << "Error : Failed to create the output file" << std::endl;
 		return (1);
 	}
 

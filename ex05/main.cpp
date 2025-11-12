@@ -7,7 +7,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		std::cerr << "Usage : ./harl <print_level>" << std::endl;
+		std::cout << "Usage : ./harl <print_level>" << std::endl;
 		return (1);
 	}
 	harl.complain(av[1]);
